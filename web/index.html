@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Applicazione">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="neuro">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>neuro</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+  <script>
+  async function checkDockerEnvironment() {
+    try {
+      const response = await fetch("/", { method: "HEAD" });
+      const isDocker = response.headers.get("X-Docker-Environment");
+
+      if (isDocker === "true") {
+        showDownloadButton();
+      }
+    } catch (e) {
+      console.log("Environment check failed.");
+    }
+  }
+
+  function showDownloadButton() {
+    const buttonContainer = document.createElement("div");
+    buttonContainer.style.position = "fixed";
+    buttonContainer.style.bottom = "20px";
+    buttonContainer.style.right = "20px";
+    buttonContainer.style.zIndex = "9999";
+
+    buttonContainer.innerHTML = `
+      <a href="/neuro.apk" download>
+        <button style="
+          background: linear-gradient(135deg, #00c6ff, #0072ff);
+          border: none;
+          color: white;
+          padding: 14px 22px;
+          font-size: 16px;
+          font-weight: bold;
+          border-radius: 30px;
+          cursor: pointer;
+          box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+          transition: all 0.2s ease-in-out;
+        ">
+          📱 Download Android App
+        </button>
+      </a>
+    `;
+
+    document.body.appendChild(buttonContainer);
+  }
+
+  window.addEventListener("load", checkDockerEnvironment);
+</script>
+
+</body>
+</html>
